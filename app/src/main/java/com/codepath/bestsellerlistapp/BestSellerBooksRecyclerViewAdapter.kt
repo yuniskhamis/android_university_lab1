@@ -1,5 +1,7 @@
 package com.codepath.bestsellerlistapp
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +38,14 @@ class BestSellerBooksRecyclerViewAdapter(
         holder.mBookDescription.text = books[position].description
         holder.mBookRating.text = books[position].rank.toString()
 
+        holder.mBuyBookButton.setOnClickListener {
+            val intent = Intent()
+            intent.action = Intent.ACTION_VIEW
+            intent.addCategory(Intent.CATEGORY_BROWSABLE)
+            intent.data = Uri.parse(books[position].amazonUrl.toString())
+            holder.mView.context.startActivity(intent)
+        }
+
         Glide.with(holder.mView.context)
             .load(holder.mItem!!.bookImageUrl)
             .override(300, 200)
@@ -60,6 +70,9 @@ class BestSellerBooksRecyclerViewAdapter(
         val mBookRating: TextView = mView.findViewById(id.ranking) as TextView
         val mBookImage: ImageView = mView.findViewById(id.book_image) as ImageView
         val mBuyBookButton: Button = mView.findViewById(id.buy_button) as Button
+
+
+
 
         var mItem: BestSellerBook? = null
 
